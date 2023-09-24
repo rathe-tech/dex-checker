@@ -8,8 +8,8 @@ export const handler: Handler = async (event: HandlerEvent, _context: HandlerCon
 
   return {
     body: JSON.stringify({
-      poolAddress,
-      nftAddress
+      poolAddress: poolAddress.toBase58(),
+      nftAddress: nftAddress.toBase58()
     }),
     statusCode: 200
   };
