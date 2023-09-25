@@ -114,10 +114,12 @@ window.onload = async () => {
       const worthInAElem = document.getElementById("worth-in-a-value");
       const worthInBElem = document.getElementById("worth-in-b-value");
 
-      const amountAinB = await getQuote(mintA.address, mintB.address, amountA);
+      const priceAinB = await getPrice(mintA.address, mintB.address);
+      const amountAinB = amountA.div(new Decimal(priceAinB)); //await getQuote(mintA.address, mintB.address, amountA);
       const positionInB = amountB.add(amountAinB).div(10 ** mintB.decimals).toDecimalPlaces(mintB.decimals);
     
-      const amountBinA = await getQuote(mintB.address, mintA.address, amountB);
+      const priceBinA = await getPrice(mintB.address, mintA.address);
+      const amountBinA = amountB.div(new Decimal(priceBinA)); //await getQuote(mintB.address, mintA.address, amountB);
       const positionInA = amountA.add(amountBinA).div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
 
       worthInAElem.textContent = positionInA;
@@ -128,10 +130,13 @@ window.onload = async () => {
         const worthInUsdcElem = document.getElementById("worth-in-usdc-value");
 
         try {
-          const amountAinUsdc = await getQuote(mintA.address, usdcMintAddress, amountA);
-          const amountBinUsdc = await getQuote(mintB.address, usdcMintAddress, amountB);
+          const priceAinUsdc = await getPrice(mintA.address, usdcMintAddress);
+          const priceBinUsdc = await getPrice(mintB.address, usdcMintAddress, amountB);
 
-          const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals);
+          const amountAinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceAinUsdc));
+          const amountBinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceBinUsdc));
+
+          const amountsInUsdc = amountAinUsdc.add(amountBinUsdc);//.div(10 ** usdcDecimals);
           worthInUsdcElem.textContent = amountsInUsdc;
         } catch (e) {
           worthInUsdcElem.textContent = "Not enough liquidity to compute";
@@ -168,8 +173,11 @@ window.onload = async () => {
       const feesA = new Decimal(pendingFees[0]);
       const feesB = new Decimal(pendingFees[1]);
 
-      const feesAinUsdc = await getQuote(mintA.address, usdcMintAddress, feesA);
-      const feesBinUsdc = await getQuote(mintB.address, usdcMintAddress, feesB);
+      const priceAinUsdc = await getPrice(mintA.address, usdcMintAddress);
+      const priceBinUsdc = await getPrice(mintB.address, usdcMintAddress);
+
+      const feesAinUsdc = feesA.mul(priceAinUsdc); //await getQuote(mintA.address, usdcMintAddress, feesA);
+      const feesBinUsdc = feesB.mul(priceBinUsdc); //await getQuote(mintB.address, usdcMintAddress, feesB);
 
       feesAElem.textContent = feesA.div(10 ** mintA.decimals);
       feesBElem.textContent = feesB.div(10 ** mintB.decimals);
@@ -256,6 +264,17 @@ async function getQuote(inputMint, outputMint, amount) {
   }
   const raw = await response.json();
   return new Decimal(raw);
+}
+
+async function getPrice(inputMint, outputMint) {
+  const response = await fetch("/.netlify/functions/get_price", {
+    method: "POST",
+    body: JSON.stringify({ inputMint, outputMint })
+  });
+  if (response.status !== 200) {
+    throw new Error(`HTTP status: ${response.status}`);
+  }
+  return await response.json();
 }
 
 async function getTokenList() {
