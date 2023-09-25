@@ -61,8 +61,12 @@ window.onload = async () => {
     const poolAddress = poolAddressInput.value.trim();
     const nftAddress = nftAddressInput.value.trim();
 
+    const strategyAddress = strategyAddressInput.value.trim();
+
     try {
-      const position = await getDexPosition({ dex, poolAddress, nftAddress });
+      const position = isKamino ?
+        await getKaminoDexPosition(strategyAddress) :
+        await getDexPosition({ dex, poolAddress, nftAddress });
 
       const {
         mints: [mintA, mintB, ...rewardMints],
