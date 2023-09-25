@@ -117,14 +117,18 @@ window.onload = async () => {
 
       const worthInUsdcInfoElem = document.getElementById("worth-in-usdc-info");
       if (mintA.address !== usdcMintAddress && mintB.address !== usdcMintAddress) {
-
-        const amountAinUsdc = await getQuote(mintA.address, usdcMintAddress, amountA);
-        const amountBinUsdc = await getQuote(mintB.address, usdcMintAddress, amountB);
-
-        const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals);
-
         const worthInUsdcElem = document.getElementById("worth-in-usdc-value");
-        worthInUsdcElem.textContent = amountsInUsdc;
+
+        try {
+          const amountAinUsdc = await getQuote(mintA.address, usdcMintAddress, amountA);
+          const amountBinUsdc = await getQuote(mintB.address, usdcMintAddress, amountB);
+
+          const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals);
+          worthInUsdcElem.textContent = amountsInUsdc;
+        } catch (e) {
+          worthInUsdcElem.textContent = "Not enough liquidity";
+          console.error(e);
+        }
 
         worthInUsdcInfoElem.classList.remove("hidden");
       } else {
