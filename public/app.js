@@ -10,6 +10,11 @@ window.onload = async () => {
   const rangePairElem = document.getElementById("range-pair");
   const rangeValueElem = document.getElementById("range-value");
 
+  const invertedPricePairElem = document.getElementById("inverted-price-pair");
+  const invertedPriceValueElem = document.getElementById("inverted-price-value");
+  const invertedRangePairElem = document.getElementById("inverted-range-pair");
+  const invertedRangeValueElem = document.getElementById("inverted-range-value");
+
   if (localStorage.getItem("dex") != null) {
     dexSelect.value = localStorage.getItem("dex");
   }
@@ -28,6 +33,7 @@ window.onload = async () => {
 
   checkPositionButton.addEventListener("click", async () => {
     checkPositionButton.setAttribute("disabled", true);
+    responseElem.classList.add("hidden");
 
     const dex = dexSelect.value;
     const poolAddress = poolAddressInput.value.trim();
@@ -45,13 +51,19 @@ window.onload = async () => {
       } = position;
 
       const symbolA = getSymbol(mintA.address);
-      const symbolB = getSymbol(mintA.address);
+      const symbolB = getSymbol(mintB.address);
 
       pricePairElem.textContent = `${symbolB} per ${symbolA}`;
       priceValueElem.textContent = new Decimal(price).toDecimalPlaces(mintB.decimals);
       rangePairElem.textContent = `${symbolB} per ${symbolA}`;
       rangeValueElem.textContent = `${new Decimal(range[0]).toDecimalPlaces(mintB.decimals)} - ${new Decimal(range[1]).toDecimalPlaces(mintB.decimals)}`;
 
+      invertedPricePairElem.textContent = `${symbolA} per ${symbolB}`;
+      invertedPriceValueElem.textContent = new Decimal(invertedPrice).toDecimalPlaces(mintA.decimals);
+      invertedRangePairElem.textContent = `${symbolA} per ${symbolB}`;
+      invertedRangeValueElem.textContent = `${new Decimal(invertedPrice[0]).toDecimalPlaces(mintA.decimals)} - ${new Decimal(invertedPrice[1]).toDecimalPlaces(mintA.decimals)}`;
+
+      responseElem.classList.remove("hidden");
     } catch (e) {
       alert(`Can't fetch data ${e}`);
     } finally {
