@@ -42,3 +42,11 @@ input, select {
   margin-top: 0.25em;
   margin-bottom: 0.25em;
 }
+
+.hidden {
+  display: none !important;
+}
+
+#response {
+  margin-top: 1em;
+}

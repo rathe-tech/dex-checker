@@ -12,23 +12,28 @@
 
 <body>
   <div id="app">
-    <div>
-      <div>Dex</div>
-      <select id="dex">
-        <option value="ORCA" selected>Orca</option>
-        <option value="RAYDIUM">Raydium</option>
-      </select>
+    <div id="kamino-panel" class="hidden">
+
     </div>
-    <div>
-      <div>Pool address</div>
-      <input type="text" id="pool-address">
-    </div>
-    <div>
-      <div>Nft address</div>
-      <input type="text" id="nft-address">
-    </div>
-    <div>
-      <button id="check-position">Check position</button>
+    <div id="dex-panel">
+      <div>
+        <div>Dex</div>
+        <select id="dex">
+          <option value="ORCA" selected>Orca</option>
+          <option value="RAYDIUM">Raydium</option>
+        </select>
+      </div>
+      <div>
+        <div>Pool address</div>
+        <input type="text" id="pool-address">
+      </div>
+      <div>
+        <div>Nft address</div>
+        <input type="text" id="nft-address">
+      </div>
+      <div>
+        <button id="check-position">Check position</button>
+      </div>
     </div>
     <div id="response">
     </div>
