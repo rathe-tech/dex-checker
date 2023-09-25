@@ -97,14 +97,20 @@ window.onload = async () => {
         elem.textContent = symbolB;
       }
 
+      const tokenAAmountElem = document.getElementById("token-a-amount");
+      const tokenBAmountElem = document.getElementById("token-b-amount");
+
+      tokenAAmountElem.textContent = amountA.div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
+      tokenBAmountElem.textContent = amountB.div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
+
       const worthInAElem = document.getElementById("worth-in-a-value");
       const worthInBElem = document.getElementById("worth-in-b-value");
 
       const amountAinB = await getQuote(mintA.address, mintB.address, amountA);
-      const positionInB = amountB.add(amountAinB).div(10 ** mintB.decimals).toDecimalPlaces(mintB.decimals).toNumber();
+      const positionInB = amountB.add(amountAinB).div(10 ** mintB.decimals).toDecimalPlaces(mintB.decimals);
     
       const amountBinA = await getQuote(mintB.address, mintA.address, amountB);
-      const positionInA = amountA.add(amountBinA).div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals).toNumber();
+      const positionInA = amountA.add(amountBinA).div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
 
       worthInAElem.textContent = positionInA;
       worthInBElem.textContent = positionInB;
