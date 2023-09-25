@@ -153,6 +153,7 @@ window.onload = async () => {
 
       pendingRewards.forEach((x, i) => {
         rewardSymbolElems[i].textContent = getSymbol(rewardMints[i].address);
+        console.log(x);
         rewardAmountElems[i].textContent = x.div(10 ** rewardMints[i].decimals).toNumber();
         rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals).toNumber();
       });
