@@ -32,6 +32,7 @@ window.onload = async () => {
 
   if (localStorage.getItem("platform") != null) {
     platformSelect.value = localStorage.getItem("platform");
+    platformSelect.dispatchEvent(new Event("change"));
   }
   strategyAddressInput.value = localStorage.getItem("strategyAddress");
   if (localStorage.getItem("dex") != null) {
@@ -183,8 +184,8 @@ window.onload = async () => {
       feesAElem.textContent = feesA.div(10 ** mintA.decimals);
       feesBElem.textContent = feesB.div(10 ** mintB.decimals);
       
-      feesAInUsdcElem.textContent = feesAinUsdc.div(10 ** usdcDecimals).toDecimalPlaces(usdcDecimals);
-      feesBInUsdcElem.textContent = feesBinUsdc.div(10 ** usdcDecimals).toDecimalPlaces(usdcDecimals);
+      feesAInUsdcElem.textContent = feesAinUsdc.toDecimalPlaces(usdcDecimals);
+      feesBInUsdcElem.textContent = feesBinUsdc.toDecimalPlaces(usdcDecimals);
 
       const rewards0Elem = document.getElementById("rewards-0");
       const rewards1Elem = document.getElementById("rewards-0");
