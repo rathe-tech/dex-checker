@@ -35,3 +35,10 @@ html {
     width: 100%;
   }
 }
+
+input, select {
+  width: 100%;
+  padding: 0.5em 0.5em;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}

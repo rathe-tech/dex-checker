@@ -5,7 +5,9 @@ window.onload = async () => {
   const checkPositionButton = document.getElementById("check-position");
   const responseElem = document.getElementById("response");
 
-  dexSelect.value = localStorage.getItem("dex");
+  if (localStorage.getItem("dex") != null) {
+    dexSelect.value = localStorage.getItem("dex");
+  }
   poolAddressInput.value = localStorage.getItem("poolAddress");
   nftAddressInput.value = localStorage.getItem("poolAddress");
 
@@ -24,8 +26,12 @@ window.onload = async () => {
     const poolAddress = poolAddressInput.value.trim();
     const nftAddress = nftAddressInput.value.trim();
 
-    const position = await getDexPosition({ dex, poolAddress, nftAddress });
-    responseElem.textContent = JSON.stringify(position, null, 4);
+    try {
+      const position = await getDexPosition({ dex, poolAddress, nftAddress });
+      responseElem.textContent = JSON.stringify(position, null, 4);
+    } catch (e) {
+      alert(`Can't fetch data ${e}`);
+    }
   });
 };
 
@@ -33,6 +39,28 @@ async function getDexPosition({ dex, poolAddress, nftAddress }) {
   const response = await fetch("/.netlify/functions/get_dex_position", {
     method: "POST",
     body: JSON.stringify({ dex, poolAddress, nftAddress })
+  });
+  if (response.status !== 200) {
+    throw new Error(`HTTP status: ${response.status}`);
+  }
+  return await response.json();
+}
+
+async function getKaminoDexPosition(strategyAddress) {
+  const response = await fetch("/.netlify/functions/get_kamino_dex_position", {
+    method: "POST",
+    body: JSON.stringify({ strategyAddress })
+  });
+  if (response.status !== 200) {
+    throw new Error(`HTTP status: ${response.status}`);
+  }
+  return await response.json();
+}
+
+async function getQuote({ inputMint, outputMint, amount }) {
+  const response = await fetch("/.netlify/functions/get_quote", {
+    method: "POST",
+    body: JSON.stringify({ inputMint, outputMint, amount })
   });
   if (response.status !== 200) {
     throw new Error(`HTTP status: ${response.status}`);
