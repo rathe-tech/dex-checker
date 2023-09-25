@@ -191,6 +191,7 @@ window.onload = async () => {
       ));
 
       pendingRewards.forEach((x, i) => {
+        rewardElems[i].classList.remove("hidden");
         rewardSymbolElems[i].textContent = getSymbol(rewardMints[i].address);
         rewardAmountElems[i].textContent = new Decimal(x).div(10 ** rewardMints[i].decimals);
         rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals);
