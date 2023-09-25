@@ -69,8 +69,8 @@ export async function getOrcaPosition({
   const priceUpper = PriceMath.sqrtPriceX64ToPrice(upperSqrtPrice, tokenAInfo.decimals, tokenBInfo.decimals);
 
   const inRange =
-    poolData.tickCurrentIndex <= positionData.tickUpperIndex &&
-    poolData.tickCurrentIndex > positionData.tickLowerIndex;
+    poolData.tickCurrentIndex < positionData.tickUpperIndex &&
+    poolData.tickCurrentIndex >= positionData.tickLowerIndex;
 
   const tickLower = position.getLowerTickData();
   const tickUpper = position.getUpperTickData();
