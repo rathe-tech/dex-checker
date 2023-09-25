@@ -207,19 +207,20 @@ window.onload = async () => {
       const rewards2InUsdcAmountElem = document.getElementById("rewards-2-in-usdc-amount");
       const rewardInUsdcAmountElems = [rewards0InUsdcAmountElem, rewards1InUsdcAmountElem, rewards2InUsdcAmountElem];
 
-      const rewardsInUsdc = await Promise.all(pendingRewards.map(async (x, i) =>
-        getQuote(rewardMints[i].address, usdcMintAddress, x)
-      ));
+      const rewardsInUsdc = await Promise.all(pendingRewards.map(async (x, i) => {
+        const price = await getPrice(rewardMints[i].address, usdcMintAddress);
+        return new Decimal(x).div(10 ** rewardMints[i].decimals).mul(price);
+      }));
 
       pendingRewards.forEach((x, i) => {
         rewardElems[i].classList.remove("hidden");
         rewardSymbolElems[i].textContent = getSymbol(rewardMints[i].address);
         rewardAmountElems[i].textContent = new Decimal(x).div(10 ** rewardMints[i].decimals);
-        rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals).toDecimalPlaces(usdcDecimals);
+        rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].toDecimalPlaces(usdcDecimals);
       });
 
       const allRewardsInUsdc = rewardsInUsdc.reduce((acc, x) => acc.add(x), new Decimal(0));
-      const pendingUsdc = feesAinUsdc.add(feesAinUsdc).add(allRewardsInUsdc).div(10 ** usdcDecimals);
+      const pendingUsdc = feesAinUsdc.add(feesAinUsdc).add(allRewardsInUsdc);
       const pendingFeesAndRewardsElem = document.getElementById("pending-fees-and-rewards");
       pendingFeesAndRewardsElem.textContent = pendingUsdc.toDecimalPlaces(usdcDecimals);
 
