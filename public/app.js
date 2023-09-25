@@ -74,7 +74,7 @@ window.onload = async () => {
       worthInAElem.textContent = positionInA;
       worthInBElem.textContent = positionInB;
 
-      const worthInUsdcInfoElem = document.getElementById("worth-in-b-info");
+      const worthInUsdcInfoElem = document.getElementById("worth-in-usdc-info");
       if (mintA.address !== usdcMintAddress && mintB.address !== usdcMintAddress) {
 
         const amountAinUsdc = await getQuote(mintA.address, usdcMintAddress, amountA);
