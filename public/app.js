@@ -5,15 +5,8 @@ window.onload = async () => {
   const checkPositionButton = document.getElementById("check-position");
   const responseElem = document.getElementById("response");
 
-  const pricePairElem = document.getElementById("price-pair");
-  const priceValueElem = document.getElementById("price-value");
-  const rangePairElem = document.getElementById("range-pair");
-  const rangeValueElem = document.getElementById("range-value");
-
-  const invertedPricePairElem = document.getElementById("inverted-price-pair");
-  const invertedPriceValueElem = document.getElementById("inverted-price-value");
-  const invertedRangePairElem = document.getElementById("inverted-range-pair");
-  const invertedRangeValueElem = document.getElementById("inverted-range-value");
+  const usdcMintAddress = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+  const usdcDecimals = 6;
 
   if (localStorage.getItem("dex") != null) {
     dexSelect.value = localStorage.getItem("dex");
@@ -44,24 +37,70 @@ window.onload = async () => {
 
       const {
         mints: [mintA, mintB, ...rewardMints],
+        liquidity: [amountA, amountB],
         price,
         invertedPrice,
         range,
-        invertedRange
+        invertedRange,
+        inRange
       } = position;
 
       const symbolA = getSymbol(mintA.address);
       const symbolB = getSymbol(mintB.address);
 
-      pricePairElem.textContent = `${symbolB} per ${symbolA}`;
-      priceValueElem.textContent = new Decimal(price).toDecimalPlaces(mintB.decimals);
-      rangePairElem.textContent = `${symbolB} per ${symbolA}`;
-      rangeValueElem.textContent = `${new Decimal(range[0]).toDecimalPlaces(mintB.decimals)} - ${new Decimal(range[1]).toDecimalPlaces(mintB.decimals)}`;
+      const tokenASymbolElems = document.getElementsByClassName("token-a-symbol");
+      const tokenBSymbolElems = document.getElementsByClassName("token-b-symbol");
 
-      invertedPricePairElem.textContent = `${symbolA} per ${symbolB}`;
-      invertedPriceValueElem.textContent = new Decimal(invertedPrice).toDecimalPlaces(mintA.decimals);
-      invertedRangePairElem.textContent = `${symbolA} per ${symbolB}`;
-      invertedRangeValueElem.textContent = `${new Decimal(invertedRange[0]).toDecimalPlaces(mintA.decimals)} - ${new Decimal(invertedRange[1]).toDecimalPlaces(mintA.decimals)}`;
+      for (let elem of tokenASymbolElems) {
+        elem.textContent = symbolA;
+      }
+
+      for (let elem of tokenBSymbolElems) {
+        elem.textContent = symbolB;
+      }
+
+      const worthInAElem = document.getElementById("worth-in-a-value");
+      const worthInBElem = document.getElementById("worth-in-b-value");
+
+      const amountAinB = await getQuote(mintA.address, mintB.address, amountA);
+      const positionInB = amountB.add(amountAinB).div(10 ** mintB.decimals).toDecimalPlaces(mintB.decimals).toNumber();
+    
+      const amountBinA = await getQuote(mintB.address, mintA.address, amountB);
+      const positionInA = amountA.add(amountBinA).div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals).toNumber();
+
+      worthInAElem.textContent = positionInA;
+      worthInBElem.textContent = positionInB;
+
+      const worthInUsdcInfoElem = document.getElementById("worth-in-b-info");
+      if (mintA.address !== usdcMintAddress && mintB.address !== usdcMintAddress) {
+
+        const amountAinUsdc = await getQuote(mintA.address, usdcMintAddress, amountA);
+        const amountBinUsdc = await getQuote(mintB.address, usdcMintAddress, amountB);
+
+        const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals).toNumber();
+
+        worthInUsdcInfoElem.classList.remove("hidden");
+        const worthInUsdcElem = document.getElementById("worth-in-b-info");
+        worthInUsdcElem.textContent = amountsInUsdc;
+      } else {
+        worthInUsdcInfoElem.classList.add("hidden");
+      }
+
+      const priceElem = document.getElementById("price-value");
+      const invertedPriceElem = document.getElementById("inverted-price-value");
+
+      priceElem.textContent = new Decimal(price).toDecimalPlaces(mintB.decimals);
+      invertedPriceElem.textContent = new Decimal(invertedPrice).toDecimalPlaces(mintA.decimals);
+
+      const rangeElem = document.getElementById("range-value");
+      const invertedRangeElem = document.getElementById("inverted-range-value");
+
+      rangeElem.textContent = `${new Decimal(range[0]).toDecimalPlaces(mintB.decimals)} - ${new Decimal(range[1]).toDecimalPlaces(mintB.decimals)}`;
+      invertedRangeElem.textContent = `${new Decimal(invertedRange[0]).toDecimalPlaces(mintA.decimals)} - ${new Decimal(invertedRange[1]).toDecimalPlaces(mintA.decimals)}`;
+
+      const inRangeElem = document.getElementById("in-range-value");
+      inRangeElem.textContent = inRange;
+      inRangeElem.style.color = inRange ? "limegreen" : "red";
 
       responseElem.classList.remove("hidden");
     } catch (e) {

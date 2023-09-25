@@ -43,6 +43,10 @@ input, select {
   margin-bottom: 0.25em;
 }
 
+p {
+  margin: 0.25em 0;
+}
+
 .hidden {
   display: none !important;
 }

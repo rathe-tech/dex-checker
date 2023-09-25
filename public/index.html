@@ -35,26 +35,30 @@
         <button id="check-position">Check position</button>
       </div>
     </div>
-    <div id="response" class="hidden">
-      <div style="margin-bottom: 1em;">
-        <div>Price</div>
-        <div id="price-pair" style="color:green; margin-top: 0.25em; margin-bottom: 0.25em;"></div>
-        <div id="price-value" style="color:white"></div>
-      </div>
+    <div id="response">
       <div style="margin-bottom: 2em;">
-        <div>Price range</div>
-        <div id="range-pair" style="color:green; margin-top: 0.25em; margin-bottom: 0.25em;"></div>
-        <div id="range-value" style="color:white"></div>
+        <p>Position <span class="token-a-symbol" style="color:limegreen"></span> amount: <span id="token-a-amount" style="color:yellow"></span></p>
+        <p>Position <span class="token-b-symbol" style="color:limegreen"></span> amount: <span id="token-b-amount" style="color:yellow"></span></p>
       </div>
-      <div style="margin-bottom: 1em;">
-        <div>Price</div>
-        <div id="inverted-price-pair" style="color:green; margin-top: 0.25em; margin-bottom: 0.25em;"></div>
-        <div id="inverted-price-value" style="color:white"></div>
+
+      <div style="margin-bottom: 2em;">
+        <p>Worth in <span class="token-a-symbol" style="color:limegreen"></span> amount: <span id="worth-in-a-value" style="color:yellow"></span></p>
+        <p>Worth in <span class="token-b-symbol" style="color:limegreen"></span> amount: <span id="worth-in-b-value" style="color:yellow"></span></p>
+        <p id="worth-in-isdc-info" class="hidden">Worth in <span style="color:limegreen">USDC</span> amount: <span id="worth-in-usdc-value" style="color:yellow"></span></p>
       </div>
-      <div style="margin-bottom: 1em;">
-        <div>Price range</div>
-        <div id="inverted-range-pair" style="color:green; margin-top: 0.25em; margin-bottom: 0.25em;"></div>
-        <div id="inverted-range-value" style="color:white"></div>
+
+      <div style="margin-bottom: 2em;">
+        <p>Price <span class="token-b-symbol" style="color:limegreen"></span> per <span class="token-a-symbol" style="color:limegreen"></span>: <span id="price-value" style="color:yellow"></span></p>
+        <p>Range <span class="token-b-symbol" style="color:limegreen"></span> per <span class="token-a-symbol" style="color:limegreen"></span>: <span id="range-value" style="color:yellow"></span></p>
+      </div>
+
+      <div style="margin-bottom: 2em;">
+        <p>Price <span class="token-a-symbol" style="color:limegreen"></span> per <span class="token-b-symbol" style="color:limegreen"></span>: <span id="inverted-price-value" style="color:yellow"></span></p>
+        <p>Range <span class="token-a-symbol" style="color:limegreen"></span> per <span class="token-b-symbol" style="color:limegreen"></span>: <span id="inverted-range-value" style="color:yellow"></span></p>
+      </div>
+
+      <div style="margin-bottom: 2em;">
+        <p>Position in range: <span id="in-range-value" style="color:limegreen"></span></p>
       </div>
     </div>
   </div>
