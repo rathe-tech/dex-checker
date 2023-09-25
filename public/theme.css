@@ -24,14 +24,14 @@ html {
   margin: 0;
 }
 
-#content {
+#app {
   margin: 0 auto;
   max-width: 900px;
   padding: 0.5em;
 }
 
 @media (max-width: 900px)  {
-  #content {
+  #app {
     width: 100%;
   }
 }

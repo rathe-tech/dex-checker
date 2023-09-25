@@ -5,6 +5,20 @@ window.onload = async () => {
   const checkPositionButton = document.getElementById("check-position");
   const responseElem = document.getElementById("response");
 
+  dexSelect.value = localStorage.getItem("dex");
+  poolAddressInput.value = localStorage.getItem("poolAddress");
+  nftAddressInput.value = localStorage.getItem("poolAddress");
+
+  dexSelect.addEventListener("change", e => {
+    localStorage.setItem("dex", e.target.value);
+  });
+  poolAddressInput.addEventListener("change", e => {
+    localStorage.setItem("poolAddress", e.target.value);
+  });
+  nftAddressInput.addEventListener("change", e => {
+    localStorage.setItem("nftAddress", e.target.value);
+  });
+
   checkPositionButton.addEventListener("click", async () => {
     const dex = dexSelect.value;
     const poolAddress = poolAddressInput.value.trim();
