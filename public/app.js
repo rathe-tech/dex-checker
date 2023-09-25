@@ -121,7 +121,7 @@ window.onload = async () => {
         const amountAinUsdc = await getQuote(mintA.address, usdcMintAddress, amountA);
         const amountBinUsdc = await getQuote(mintB.address, usdcMintAddress, amountB);
 
-        const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals).toNumber();
+        const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals);
 
         const worthInUsdcElem = document.getElementById("worth-in-usdc-value");
         worthInUsdcElem.textContent = amountsInUsdc;
@@ -159,11 +159,11 @@ window.onload = async () => {
       const feesAinUsdc = await getQuote(mintA.address, usdcMintAddress, feesA);
       const feesBinUsdc = await getQuote(mintB.address, usdcMintAddress, feesB);
 
-      feesAElem.textContent = feesA.div(10 ** mintA.decimals).toNumber();
-      feesBElem.textContent = feesB.div(10 ** mintB.decimals).toNumber();
+      feesAElem.textContent = feesA.div(10 ** mintA.decimals);
+      feesBElem.textContent = feesB.div(10 ** mintB.decimals);
       
-      feesAInUsdcElem.textContent = feesAinUsdc.div(10 ** usdcDecimals).toNumber();
-      feesBInUsdcElem.textContent = feesBinUsdc.div(10 ** usdcDecimals).toNumber();
+      feesAInUsdcElem.textContent = feesAinUsdc.div(10 ** usdcDecimals);
+      feesBInUsdcElem.textContent = feesBinUsdc.div(10 ** usdcDecimals);
 
       const rewards0Elem = document.getElementById("rewards-0");
       const rewards1Elem = document.getElementById("rewards-0");
@@ -192,8 +192,8 @@ window.onload = async () => {
 
       pendingRewards.forEach((x, i) => {
         rewardSymbolElems[i].textContent = getSymbol(rewardMints[i].address);
-        rewardAmountElems[i].textContent = new Decimal(x).div(10 ** rewardMints[i].decimals).toNumber();
-        rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals).toNumber();
+        rewardAmountElems[i].textContent = new Decimal(x).div(10 ** rewardMints[i].decimals);
+        rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals);
       });
 
       const allRewardsInUsdc = rewardsInUsdc.reduce((acc, x) => acc.add(x), new Decimal(0));
