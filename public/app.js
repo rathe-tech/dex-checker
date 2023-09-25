@@ -83,9 +83,10 @@ window.onload = async () => {
 
         const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals).toNumber();
 
-        worthInUsdcInfoElem.classList.remove("hidden");
-        const worthInUsdcElem = document.getElementById("worth-in-b-info");
+        const worthInUsdcElem = document.getElementById("worth-in-usdc-value");
         worthInUsdcElem.textContent = amountsInUsdc;
+
+        worthInUsdcInfoElem.classList.remove("hidden");
       } else {
         worthInUsdcInfoElem.classList.add("hidden");
       }
