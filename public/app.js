@@ -9,7 +9,7 @@ window.onload = async () => {
     dexSelect.value = localStorage.getItem("dex");
   }
   poolAddressInput.value = localStorage.getItem("poolAddress");
-  nftAddressInput.value = localStorage.getItem("poolAddress");
+  nftAddressInput.value = localStorage.getItem("nftAddress");
 
   dexSelect.addEventListener("change", e => {
     localStorage.setItem("dex", e.target.value);
@@ -22,6 +22,8 @@ window.onload = async () => {
   });
 
   checkPositionButton.addEventListener("click", async () => {
+    checkPositionButton.setAttribute("disabled", true);
+
     const dex = dexSelect.value;
     const poolAddress = poolAddressInput.value.trim();
     const nftAddress = nftAddressInput.value.trim();
@@ -31,6 +33,8 @@ window.onload = async () => {
       responseElem.textContent = JSON.stringify(position, null, 4);
     } catch (e) {
       alert(`Can't fetch data ${e}`);
+    } finally {
+      checkPositionButton.removeAttribute("disabled");
     }
   });
 };
