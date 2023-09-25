@@ -126,7 +126,7 @@ window.onload = async () => {
           const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).div(10 ** usdcDecimals);
           worthInUsdcElem.textContent = amountsInUsdc;
         } catch (e) {
-          worthInUsdcElem.textContent = "Not enough liquidity";
+          worthInUsdcElem.textContent = "Not enough liquidity to compute";
           console.error(e);
         }
 
@@ -268,7 +268,8 @@ function getSymbol(mintAddress) {
     ["7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT", "UXD"],
     ["USDH1SM1ojwWUga67PGrgFWUHibbjqMvuMaDkRJTgkX", "USDH"],
     ["HBB111SCo9jkCejsZfz8Ec8nH7T6THF8KEKSnvwT6XK6", "HBB"],
-    ["2VhjJ9WxaGC3EZFwJG9BDUs9KxKCAjQY4vgd1qxgYWVg", "EUROe"]
+    ["2VhjJ9WxaGC3EZFwJG9BDUs9KxKCAjQY4vgd1qxgYWVg", "EUROe"],
+    ["7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs", "wETH"]
   ]);
   const symbol = knowsSymbols.get(mintAddress);
   return symbol ?? mintAddress;
