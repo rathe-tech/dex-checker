@@ -126,6 +126,7 @@ window.onload = async () => {
 
       responseElem.classList.remove("hidden");
     } catch (e) {
+      console.error(e);
       alert(`Can't fetch data ${e}`);
     } finally {
       checkPositionButton.removeAttribute("disabled");
