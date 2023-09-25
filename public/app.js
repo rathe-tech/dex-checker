@@ -64,6 +64,14 @@ window.onload = async () => {
     const strategyAddress = strategyAddressInput.value.trim();
 
     try {
+      const tokenList = await getTokenList();
+      const symbols = new Map(tokenList.map(x => [x.address, x.symbol]));
+
+      function getSymbol(mintAddress) {
+        const symbol = symbols.get(mintAddress);
+        return symbol ?? mintAddress;
+      }
+
       const position = isKamino ?
         await getKaminoDexPosition(strategyAddress) :
         await getDexPosition({ dex, poolAddress, nftAddress });
@@ -250,27 +258,7 @@ async function getQuote(inputMint, outputMint, amount) {
   return new Decimal(raw);
 }
 
-function getSymbol(mintAddress) {
-  const knowsSymbols = new Map([
-    ["So11111111111111111111111111111111111111112", "SOL"],
-    ["mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So", "mSOL"],
-    ["7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj", "stSOL"],
-    ["bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1", "bSOL"],
-    ["J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn", "JitoSOL"],
-    ["4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R", "RAY"],
-    ["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", "USDC"],
-    ["Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", "USDT"],
-    ["6DNSN2BJsaPFdFFc1zP37kkeNe4Usc1Sqkzr9C9vPWcU", "tBTC"],
-    ["4Njvi3928U3figEF5tf8xvjLC5GqUN33oe4XTJNe7xXC", "T"],
-    ["orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE", "ORCA"],
-    ["MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey", "MNDE"],
-    ["RLBxxFkseAZ4RgJH3Sqn8jXxhmGoz9jWxDNJMh8pL7a", "RLB"],
-    ["7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT", "UXD"],
-    ["USDH1SM1ojwWUga67PGrgFWUHibbjqMvuMaDkRJTgkX", "USDH"],
-    ["HBB111SCo9jkCejsZfz8Ec8nH7T6THF8KEKSnvwT6XK6", "HBB"],
-    ["2VhjJ9WxaGC3EZFwJG9BDUs9KxKCAjQY4vgd1qxgYWVg", "EUROe"],
-    ["7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs", "wETH"]
-  ]);
-  const symbol = knowsSymbols.get(mintAddress);
-  return symbol ?? mintAddress;
+async function getTokenList() {
+  const response = await fetch("/.netlify/functions/token_list");
+  return await response.json();
 }
