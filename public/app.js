@@ -1,7 +1,7 @@
 window.onload = async () => {
   const platformSelect = document.getElementById("platform");
 
-  const kaminoPanel = document.getElementById("dex-panel");
+  const kaminoPanel = document.getElementById("kamino-panel");
   const dexPanel = document.getElementById("dex-panel");
 
   const strategyAddressInput = document.getElementById("strategy-address");
@@ -32,12 +32,16 @@ window.onload = async () => {
   if (localStorage.getItem("platform") != null) {
     platformSelect.value = localStorage.getItem("platform");
   }
-  strategyAddressInput.value = localStorage.getItem("strategy");
+  strategyAddressInput.value = localStorage.getItem("strategyAddress");
   if (localStorage.getItem("dex") != null) {
     dexSelect.value = localStorage.getItem("dex");
   }
   poolAddressInput.value = localStorage.getItem("poolAddress");
   nftAddressInput.value = localStorage.getItem("nftAddress");
+
+  strategyAddressInput.addEventListener("change", e => {
+    localStorage.setItem("strategyAddress", e.target.value);
+  });
 
   dexSelect.addEventListener("change", e => {
     localStorage.setItem("dex", e.target.value);
