@@ -144,7 +144,8 @@ async function getQuote(inputMint, outputMint, amount) {
   if (response.status !== 200) {
     throw new Error(`HTTP status: ${response.status}`);
   }
-  return await response.json();
+  const data = await response.json();
+  return new Decimal(data.outAmount);
 }
 
 function getSymbol(mintAddress) {
