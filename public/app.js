@@ -84,7 +84,7 @@ window.onload = async () => {
       const symbolB = getSymbol(mintB.address);
 
       const amountA = new Decimal(liquidity[0]);
-      const amountB = new Decimal(liquidity[0]);
+      const amountB = new Decimal(liquidity[1]);
 
       const tokenASymbolElems = document.getElementsByClassName("token-a-symbol");
       const tokenBSymbolElems = document.getElementsByClassName("token-b-symbol");
@@ -101,7 +101,7 @@ window.onload = async () => {
       const tokenBAmountElem = document.getElementById("token-b-amount");
 
       tokenAAmountElem.textContent = amountA.div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
-      tokenBAmountElem.textContent = amountB.div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
+      tokenBAmountElem.textContent = amountB.div(10 ** mintB.decimals).toDecimalPlaces(mintB.decimals);
 
       const worthInAElem = document.getElementById("worth-in-a-value");
       const worthInBElem = document.getElementById("worth-in-b-value");
