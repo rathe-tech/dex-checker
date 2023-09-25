@@ -132,10 +132,10 @@ window.onload = async () => {
 
         try {
           const priceUsdcPerA = await getPrice(mintA.address, usdcMintAddress);
-          const priceUsdcPerB = await getPrice(mintB.address, usdcMintAddress, amountB);
+          const priceUsdcPerB = await getPrice(mintB.address, usdcMintAddress);
 
           const amountAinUsdc = amountA.div(10 ** mintA.decimals).mul(new Decimal(priceUsdcPerA));
-          const amountBinUsdc = amountA.div(10 ** mintB.decimals).mul(new Decimal(priceUsdcPerB));
+          const amountBinUsdc = amountB.div(10 ** mintB.decimals).mul(new Decimal(priceUsdcPerB));
 
           const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).toDecimalPlaces(usdcDecimals);//.div(10 ** usdcDecimals);
           worthInUsdcElem.textContent = amountsInUsdc;
