@@ -27,6 +27,7 @@ window.onload = async () => {
       kaminoPanel.classList.add("hidden");
       dexPanel.classList.remove("hidden");
     }
+    localStorage.setItem("platform", e.target.value);
   });
 
   if (localStorage.getItem("platform") != null) {
@@ -35,7 +36,6 @@ window.onload = async () => {
   strategyAddressInput.value = localStorage.getItem("strategyAddress");
   if (localStorage.getItem("dex") != null) {
     dexSelect.value = localStorage.getItem("dex");
-    dexSelect.dispatchEvent(new Event("change"));
   }
   poolAddressInput.value = localStorage.getItem("poolAddress");
   nftAddressInput.value = localStorage.getItem("nftAddress");
