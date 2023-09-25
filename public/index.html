@@ -12,8 +12,20 @@
 
 <body>
   <div id="app">
+    <div>
+      <div>
+        <div>Choose platform</div>
+        <select id="platform">
+          <option value="KAMINO" selected>Kamino</option>
+          <option value="DEX">Orca/Raydium</option>
+        </select>
+      </div>
+    </div>
     <div id="kamino-panel" class="hidden">
-
+      <div>
+        <div>Kamino strategy address</div>
+        <input type="text" id="strategy-address">
+      </div>
     </div>
     <div id="dex-panel">
       <div>
@@ -31,7 +43,7 @@
         <div>Nft address</div>
         <input type="text" id="nft-address">
       </div>
-      <div>
+      <div style="margin-top: 1.5em;">
         <button id="check-position">Check position</button>
       </div>
     </div>

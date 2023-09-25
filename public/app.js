@@ -1,4 +1,11 @@
 window.onload = async () => {
+  const platformSelect = document.getElementById("platform");
+
+  const kaminoPanel = document.getElementById("dex-panel");
+  const dexPanel = document.getElementById("dex-panel");
+
+  const strategyAddressInput = document.getElementById("strategy-address");
+
   const dexSelect = document.getElementById("dex");
   const poolAddressInput = document.getElementById("pool-address");
   const nftAddressInput = document.getElementById("nft-address");
@@ -8,6 +15,24 @@ window.onload = async () => {
   const usdcMintAddress = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
   const usdcDecimals = 6;
 
+  let isKamino = true;
+
+  platformSelect.addEventListener("change", e => {
+    if (e.target.value === "KAMINO") {
+      isKamino = true;
+      kaminoPanel.classList.remove("hidden");
+      dexPanel.classList.add("hidden");
+    } else {
+      isKamino = false;
+      kaminoPanel.classList.add("hidden");
+      dexPanel.classList.remove("hidden");
+    }
+  });
+
+  if (localStorage.getItem("platform") != null) {
+    platformSelect.value = localStorage.getItem("platform");
+  }
+  strategyAddressInput.value = localStorage.getItem("strategy");
   if (localStorage.getItem("dex") != null) {
     dexSelect.value = localStorage.getItem("dex");
   }
