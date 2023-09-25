@@ -16,6 +16,16 @@ export const handler: Handler = async (event: HandlerEvent, _context: HandlerCon
     };
   } else {
     const response = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}`);
+
+    if (response.status !== 200) {
+      const raw = await response.text();
+      console.error(raw);
+      return {
+        body: raw,
+        statusCode: response.status
+      };
+    }
+
     const data = await response.json();
     return {
       body: JSON.stringify(new Decimal(data.outAmount)),
