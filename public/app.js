@@ -183,8 +183,8 @@ window.onload = async () => {
       feesAElem.textContent = feesA.div(10 ** mintA.decimals);
       feesBElem.textContent = feesB.div(10 ** mintB.decimals);
       
-      feesAInUsdcElem.textContent = feesAinUsdc.div(10 ** usdcDecimals);
-      feesBInUsdcElem.textContent = feesBinUsdc.div(10 ** usdcDecimals);
+      feesAInUsdcElem.textContent = feesAinUsdc.div(10 ** usdcDecimals).toDecimalPlaces(usdcDecimals);
+      feesBInUsdcElem.textContent = feesBinUsdc.div(10 ** usdcDecimals).toDecimalPlaces(usdcDecimals);
 
       const rewards0Elem = document.getElementById("rewards-0");
       const rewards1Elem = document.getElementById("rewards-0");
@@ -215,13 +215,13 @@ window.onload = async () => {
         rewardElems[i].classList.remove("hidden");
         rewardSymbolElems[i].textContent = getSymbol(rewardMints[i].address);
         rewardAmountElems[i].textContent = new Decimal(x).div(10 ** rewardMints[i].decimals);
-        rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals);
+        rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals).toDecimalPlaces(usdcDecimals);
       });
 
       const allRewardsInUsdc = rewardsInUsdc.reduce((acc, x) => acc.add(x), new Decimal(0));
       const pendingUsdc = feesAinUsdc.add(feesAinUsdc).add(allRewardsInUsdc).div(10 ** usdcDecimals);
       const pendingFeesAndRewardsElem = document.getElementById("pending-fees-and-rewards");
-      pendingFeesAndRewardsElem.textContent = pendingUsdc;
+      pendingFeesAndRewardsElem.textContent = pendingUsdc.toDecimalPlaces(usdcDecimals);
 
       responseElem.classList.remove("hidden");
     } catch (e) {
