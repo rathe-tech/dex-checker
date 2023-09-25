@@ -72,7 +72,7 @@ async function getQuote({ inputMint, outputMint, amount }) {
   return await response.json();
 }
 
-export function getSymbol(mintAddress) {
+function getSymbol(mintAddress) {
   const knowsSymbols = new Map([
     ["So11111111111111111111111111111111111111112", "SOL"],
     ["mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So", "mSOL"],
