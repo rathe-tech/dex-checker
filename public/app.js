@@ -188,8 +188,8 @@ window.onload = async () => {
       feesBInUsdcElem.textContent = feesBinUsdc.toDecimalPlaces(usdcDecimals);
 
       const rewards0Elem = document.getElementById("rewards-0");
-      const rewards1Elem = document.getElementById("rewards-0");
-      const rewards2Elem = document.getElementById("rewards-0");
+      const rewards1Elem = document.getElementById("rewards-1");
+      const rewards2Elem = document.getElementById("rewards-2");
       const rewardElems = [rewards0Elem, rewards1Elem, rewards2Elem];
       rewardElems.forEach(x => x.classList.add("hidden"));
 
