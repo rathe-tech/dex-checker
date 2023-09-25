@@ -221,7 +221,7 @@ window.onload = async () => {
       });
 
       const allRewardsInUsdc = rewardsInUsdc.reduce((acc, x) => acc.add(x), new Decimal(0));
-      const pendingUsdc = feesAinUsdc.add(feesAinUsdc).add(allRewardsInUsdc);
+      const pendingUsdc = feesAinUsdc.add(feesBinUsdc).add(allRewardsInUsdc);
       const pendingFeesAndRewardsElem = document.getElementById("pending-fees-and-rewards");
       pendingFeesAndRewardsElem.textContent = pendingUsdc.toDecimalPlaces(usdcDecimals);
 
