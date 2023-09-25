@@ -257,7 +257,11 @@ function getSymbol(mintAddress) {
     ["6DNSN2BJsaPFdFFc1zP37kkeNe4Usc1Sqkzr9C9vPWcU", "tBTC"],
     ["4Njvi3928U3figEF5tf8xvjLC5GqUN33oe4XTJNe7xXC", "T"],
     ["orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE", "ORCA"],
-    ["MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey", "MNDE"]
+    ["MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey", "MNDE"],
+    ["RLBxxFkseAZ4RgJH3Sqn8jXxhmGoz9jWxDNJMh8pL7a", "RLB"],
+    ["7kbnvuGBxxj8AG9qp8Scn56muWGaRaFqxg1FsRp3PaFT", "UXD"],
+    ["USDH1SM1ojwWUga67PGrgFWUHibbjqMvuMaDkRJTgkX", "USDH"],
+    ["HBB111SCo9jkCejsZfz8Ec8nH7T6THF8KEKSnvwT6XK6", "HBB"],
   ]);
   const symbol = knowsSymbols.get(mintAddress);
   return symbol ?? mintAddress;
