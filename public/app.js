@@ -16,7 +16,7 @@ window.onload = async () => {
 };
 
 async function getDexPosition({ dex, poolAddress, nftAddress }) {
-  const response = await fetch("/.netlify/functions/get-dex-position", {
+  const response = await fetch("/.netlify/functions/get_dex_position", {
     method: "POST",
     body: JSON.stringify({ dex, poolAddress, nftAddress })
   });
