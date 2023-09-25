@@ -61,7 +61,7 @@ window.onload = async () => {
       invertedPricePairElem.textContent = `${symbolA} per ${symbolB}`;
       invertedPriceValueElem.textContent = new Decimal(invertedPrice).toDecimalPlaces(mintA.decimals);
       invertedRangePairElem.textContent = `${symbolA} per ${symbolB}`;
-      invertedRangeValueElem.textContent = `${new Decimal(invertedPrice[0]).toDecimalPlaces(mintA.decimals)} - ${new Decimal(invertedPrice[1]).toDecimalPlaces(mintA.decimals)}`;
+      invertedRangeValueElem.textContent = `${new Decimal(invertedRange[0]).toDecimalPlaces(mintA.decimals)} - ${new Decimal(invertedRange[1]).toDecimalPlaces(mintA.decimals)}`;
 
       responseElem.classList.remove("hidden");
     } catch (e) {
