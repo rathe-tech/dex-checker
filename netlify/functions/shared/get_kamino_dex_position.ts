@@ -1,4 +1,4 @@
-import Decimal from "decimal.js"
+import Decimal from "decimal.js";
 import { Connection, PublicKey } from "@solana/web3.js";
 import { getDexPosition } from "./get_dex_position";
 import { Kamino, numberToDex } from "@hubbleprotocol/kamino-sdk";

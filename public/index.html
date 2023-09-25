@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Some exp api</title>
-    </head>
+
+<head>
+  <meta charset="utf-8">
+  <title>DEX position checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="./decimal.min.js"></script>
+  <script src="./app.js"></script>
+  <link rel="stylesheet" type="text/css" href="theme.css">
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <div>Dex</div>
+      <select id="dex">
+        <option value="RAYDIUM">Raydium</option>
+        <option value="Orca">Orca</option>
+      </select>
+    </div>
+    <div>
+      <div>Pool address</div>
+      <input type="text" id="pool-address">
+    </div>
+    <div>
+      <div>Nft address</div>
+      <input type="text" id="nft-address">
+    </div>
+    <div>
+      <button id="check-position">Check position</button>
+    </div>
+    <div id="response">
+    </div>
+  </div>
+</body>
+
 </html>
