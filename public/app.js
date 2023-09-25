@@ -5,6 +5,11 @@ window.onload = async () => {
   const checkPositionButton = document.getElementById("check-position");
   const responseElem = document.getElementById("response");
 
+  const pricePairElem = document.getElementById("price-pair");
+  const priceValueElem = document.getElementById("price-value");
+  const rangePairElem = document.getElementById("range-pair");
+  const rangeValueElem = document.getElementById("range-value");
+
   if (localStorage.getItem("dex") != null) {
     dexSelect.value = localStorage.getItem("dex");
   }
@@ -30,7 +35,23 @@ window.onload = async () => {
 
     try {
       const position = await getDexPosition({ dex, poolAddress, nftAddress });
-      responseElem.textContent = JSON.stringify(position, null, 4);
+
+      const {
+        mints: [mintA, mintB, ...rewardMints],
+        price,
+        invertedPrice,
+        range,
+        invertedRange
+      } = position;
+
+      const symbolA = getSymbol(mintA.address);
+      const symbolB = getSymbol(mintA.address);
+
+      pricePairElem.textContent = `${symbolB} per ${symbolA}`;
+      priceValueElem.textContent = new Decimal(price).toDecimalPlaces(mintB.decimals);
+      rangePairElem.textContent = `${symbolB} per ${symbolA}`;
+      rangeValueElem.textContent = `${new Decimal(range[0]).toDecimalPlaces(mintB.decimals)} - ${new Decimal(range[1]).toDecimalPlaces(mintB.decimals)}`;
+
     } catch (e) {
       alert(`Can't fetch data ${e}`);
     } finally {
