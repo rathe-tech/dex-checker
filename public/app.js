@@ -133,7 +133,7 @@ async function getKaminoDexPosition(strategyAddress) {
   return await response.json();
 }
 
-async function getQuote({ inputMint, outputMint, amount }) {
+async function getQuote(inputMint, outputMint, amount) {
   const response = await fetch("/.netlify/functions/get_quote", {
     method: "POST",
     body: JSON.stringify({ inputMint, outputMint, amount })
