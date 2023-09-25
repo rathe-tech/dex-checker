@@ -39,6 +39,7 @@ window.onload = async () => {
         mints: [mintA, mintB, ...rewardMints],
         liquidity,
         pendingFees,
+        pendingRewards,
         price,
         invertedPrice,
         range,
@@ -111,7 +112,7 @@ window.onload = async () => {
       const feesBElem = document.getElementById("fees-b-amount");
 
       const feesAInUsdcElem = document.getElementById("fees-a-in-usdc-amount");
-      const feesBInUsdcElem = document.getElementById("fees-a-in-usdc-amount");
+      const feesBInUsdcElem = document.getElementById("fees-b-in-usdc-amount");
 
       const feesA = new Decimal(pendingFees[0]);
       const feesB = new Decimal(pendingFees[1]);
@@ -124,6 +125,37 @@ window.onload = async () => {
       
       feesAInUsdcElem.textContent = feesAinUsdc.div(10 ** usdcDecimals).toNumber();
       feesBInUsdcElem.textContent = feesBinUsdc.div(10 ** usdcDecimals).toNumber();
+
+      const rewards0Elem = document.getElementById("rewards-0");
+      const rewards1Elem = document.getElementById("rewards-0");
+      const rewards2Elem = document.getElementById("rewards-0");
+      const rewardElems = [rewards0Elem, rewards1Elem, rewards2Elem];
+      rewardElems.forEach(x => x.classList.add("hidden"));
+
+      const rewards0SymbolElem = document.getElementById("rewards-0-symbol");
+      const rewards1SymbolElem = document.getElementById("rewards-1-symbol");
+      const rewards2SymbolElem = document.getElementById("rewards-2-symbol");
+      const rewardSymbolElems = [rewards0SymbolElem, rewards1SymbolElem, rewards2SymbolElem];
+
+      const rewards0AmountElem = document.getElementById("rewards-0-amount");
+      const rewards1AmountElem = document.getElementById("rewards-1-amount");
+      const rewards2AmountElem = document.getElementById("rewards-2-amount");
+      const rewardAmountElems = [rewards0AmountElem, rewards1AmountElem, rewards2AmountElem];
+
+      const rewards0InUsdcAmountElem = document.getElementById("rewards-0-in-usdc-amount");
+      const rewards1InUsdcAmountElem = document.getElementById("rewards-1-in-usdc-amount");
+      const rewards2InUsdcAmountElem = document.getElementById("rewards-2-in-usdc-amount");
+      const rewardInUsdcAmountElems = [rewards0InUsdcAmountElem, rewards1InUsdcAmountElem, rewards2InUsdcAmountElem];
+
+      const rewardsInUsdc = await Promise.all(pendingRewards.map(async (x, i) =>
+        getQuote(rewardMints[i].address, usdcMintAddress, x)
+      ));
+
+      pendingRewards.forEach((x, i) => {
+        rewardSymbolElems[i].textContent = getSymbol(rewardMints[i].address);
+        rewardAmountElems[i].textContent = x.div(10 ** rewardMints[i].decimals).toNumber();
+        rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals).toNumber();
+      });
 
       responseElem.classList.remove("hidden");
     } catch (e) {
