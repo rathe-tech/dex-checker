@@ -35,6 +35,7 @@ window.onload = async () => {
   strategyAddressInput.value = localStorage.getItem("strategyAddress");
   if (localStorage.getItem("dex") != null) {
     dexSelect.value = localStorage.getItem("dex");
+    dexSelect.dispatchEvent(new Event("change"));
   }
   poolAddressInput.value = localStorage.getItem("poolAddress");
   nftAddressInput.value = localStorage.getItem("nftAddress");
@@ -116,11 +117,11 @@ window.onload = async () => {
 
       const priceBPerA = await getPrice(mintA.address, mintB.address);
       const amountAinB = amountA.div(10 ** mintA.decimals).mul(new Decimal(priceBPerA)); //await getQuote(mintA.address, mintB.address, amountA);
-      const positionInB = amountB.add(amountAinB).div(10 ** mintB.decimals).toDecimalPlaces(mintB.decimals);
+      const positionInB = amountB.div(10 ** mintB.decimals).add(amountAinB).toDecimalPlaces(mintB.decimals);
     
       const priceAPerB = await getPrice(mintB.address, mintA.address);
       const amountBinA = amountB.div(10 ** mintB.decimals).mul(new Decimal(priceAPerB)); //await getQuote(mintB.address, mintA.address, amountB);
-      const positionInA = amountA.add(amountBinA).div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
+      const positionInA = amountA.div(10 ** mintA.decimals).add(amountBinA).toDecimalPlaces(mintA.decimals);
 
       worthInAElem.textContent = positionInA;
       worthInBElem.textContent = positionInB;
@@ -133,10 +134,10 @@ window.onload = async () => {
           const priceUsdcPerA = await getPrice(mintA.address, usdcMintAddress);
           const priceUsdcPerB = await getPrice(mintB.address, usdcMintAddress, amountB);
 
-          const amountAinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceUsdcPerA));
-          const amountBinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceUsdcPerB));
+          const amountAinUsdc = amountA.div(10 ** mintA.decimals).mul(new Decimal(priceUsdcPerA));
+          const amountBinUsdc = amountA.div(10 ** mintB.decimals).mul(new Decimal(priceUsdcPerB));
 
-          const amountsInUsdc = amountAinUsdc.add(amountBinUsdc);//.div(10 ** usdcDecimals);
+          const amountsInUsdc = amountAinUsdc.add(amountBinUsdc).toDecimalPlaces(usdcDecimals);//.div(10 ** usdcDecimals);
           worthInUsdcElem.textContent = amountsInUsdc;
         } catch (e) {
           worthInUsdcElem.textContent = "Not enough liquidity to compute";
