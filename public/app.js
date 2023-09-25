@@ -38,6 +38,7 @@ window.onload = async () => {
       const {
         mints: [mintA, mintB, ...rewardMints],
         liquidity,
+        pendingFees,
         price,
         invertedPrice,
         range,
@@ -104,6 +105,24 @@ window.onload = async () => {
       const inRangeElem = document.getElementById("in-range-value");
       inRangeElem.textContent = inRange;
       inRangeElem.style.color = inRange ? "limegreen" : "red";
+
+      const feesAElem = document.getElementById("fees-a-amount");
+      const feesBElem = document.getElementById("fees-b-amount");
+
+      const feesAInUsdcElem = document.getElementById("fees-a-in-usdc-amount");
+      const feesBInUsdcElem = document.getElementById("fees-a-in-usdc-amount");
+
+      const feesA = new Decimal(pendingFees[0]);
+      const feesB = new Decimal(pendingFees[1]);
+
+      const feesAinUsdc = await getQuote(mintA.address, usdcMintAddress, feesA);
+      const feesBinUsdc = await getQuote(mintB.address, usdcMintAddress, feesB);
+
+      feesAElem.textContent = feesA.div(10 ** mintA.decimals).toNumber();
+      feesBElem.textContent = feesB.div(10 ** mintB.decimals).toNumber();
+      
+      feesAInUsdcElem.textContent = feesAinUsdc.div(10 ** usdcDecimals).toNumber();
+      feesBInUsdcElem.textContent = feesBinUsdc.div(10 ** usdcDecimals).toNumber();
 
       responseElem.classList.remove("hidden");
     } catch (e) {
