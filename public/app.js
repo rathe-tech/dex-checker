@@ -153,10 +153,14 @@ window.onload = async () => {
 
       pendingRewards.forEach((x, i) => {
         rewardSymbolElems[i].textContent = getSymbol(rewardMints[i].address);
-        console.log(x);
-        rewardAmountElems[i].textContent = x.div(10 ** rewardMints[i].decimals).toNumber();
+        rewardAmountElems[i].textContent = new Decimal(x).div(10 ** rewardMints[i].decimals).toNumber();
         rewardInUsdcAmountElems[i].textContent = rewardsInUsdc[i].div(10 ** usdcDecimals).toNumber();
       });
+
+      const allRewardsInUsdc = rewardsInUsdc.reduce((acc, x) => acc.add(x), new Decimal(0));
+      const pendingUsdc = feesAinUsdc.add(feesAinUsdc).add(allRewardsInUsdc).div(10 ** usdcDecimals);
+      const pendingFeesAndRewardsElem = document.getElementById("pending-fees-and-rewards");
+      pendingFeesAndRewardsElem.textContent = pendingUsdc;
 
       responseElem.classList.remove("hidden");
     } catch (e) {
