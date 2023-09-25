@@ -37,7 +37,7 @@ window.onload = async () => {
 
       const {
         mints: [mintA, mintB, ...rewardMints],
-        liquidity: [amountA, amountB],
+        liquidity,
         price,
         invertedPrice,
         range,
@@ -47,6 +47,9 @@ window.onload = async () => {
 
       const symbolA = getSymbol(mintA.address);
       const symbolB = getSymbol(mintB.address);
+
+      const amountA = new Decimal(liquidity[0]);
+      const amountB = new Decimal(liquidity[0]);
 
       const tokenASymbolElems = document.getElementsByClassName("token-a-symbol");
       const tokenBSymbolElems = document.getElementsByClassName("token-b-symbol");
