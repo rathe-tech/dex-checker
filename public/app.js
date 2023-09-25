@@ -177,8 +177,8 @@ window.onload = async () => {
       const priceAinUsdc = await getPrice(mintA.address, usdcMintAddress);
       const priceBinUsdc = await getPrice(mintB.address, usdcMintAddress);
 
-      const feesAinUsdc = feesA.mul(priceAinUsdc); //await getQuote(mintA.address, usdcMintAddress, feesA);
-      const feesBinUsdc = feesB.mul(priceBinUsdc); //await getQuote(mintB.address, usdcMintAddress, feesB);
+      const feesAinUsdc = feesA.div(10 ** mintA.decimals).mul(priceAinUsdc); //await getQuote(mintA.address, usdcMintAddress, feesA);
+      const feesBinUsdc = feesB.div(10 ** mintB.decimals).mul(priceBinUsdc); //await getQuote(mintB.address, usdcMintAddress, feesB);
 
       feesAElem.textContent = feesA.div(10 ** mintA.decimals);
       feesBElem.textContent = feesB.div(10 ** mintB.decimals);
