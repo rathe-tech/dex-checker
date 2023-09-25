@@ -114,12 +114,12 @@ window.onload = async () => {
       const worthInAElem = document.getElementById("worth-in-a-value");
       const worthInBElem = document.getElementById("worth-in-b-value");
 
-      const priceAinB = await getPrice(mintA.address, mintB.address);
-      const amountAinB = amountA.div(new Decimal(priceAinB)); //await getQuote(mintA.address, mintB.address, amountA);
+      const priceBPerA = await getPrice(mintA.address, mintB.address);
+      const amountAinB = amountA.div(10 ** mintA.decimals).mul(new Decimal(priceBPerA)); //await getQuote(mintA.address, mintB.address, amountA);
       const positionInB = amountB.add(amountAinB).div(10 ** mintB.decimals).toDecimalPlaces(mintB.decimals);
     
-      const priceBinA = await getPrice(mintB.address, mintA.address);
-      const amountBinA = amountB.div(new Decimal(priceBinA)); //await getQuote(mintB.address, mintA.address, amountB);
+      const priceAPerB = await getPrice(mintB.address, mintA.address);
+      const amountBinA = amountB.div(10 ** mintB.decimals).mul(new Decimal(priceAPerB)); //await getQuote(mintB.address, mintA.address, amountB);
       const positionInA = amountA.add(amountBinA).div(10 ** mintA.decimals).toDecimalPlaces(mintA.decimals);
 
       worthInAElem.textContent = positionInA;
@@ -130,11 +130,11 @@ window.onload = async () => {
         const worthInUsdcElem = document.getElementById("worth-in-usdc-value");
 
         try {
-          const priceAinUsdc = await getPrice(mintA.address, usdcMintAddress);
-          const priceBinUsdc = await getPrice(mintB.address, usdcMintAddress, amountB);
+          const priceUsdcPerA = await getPrice(mintA.address, usdcMintAddress);
+          const priceUsdcPerB = await getPrice(mintB.address, usdcMintAddress, amountB);
 
-          const amountAinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceAinUsdc));
-          const amountBinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceBinUsdc));
+          const amountAinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceUsdcPerA));
+          const amountBinUsdc = amountA.mul(10 ** mintA.decimals).mul(new Decimal(priceUsdcPerB));
 
           const amountsInUsdc = amountAinUsdc.add(amountBinUsdc);//.div(10 ** usdcDecimals);
           worthInUsdcElem.textContent = amountsInUsdc;
