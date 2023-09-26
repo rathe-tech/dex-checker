@@ -43,6 +43,13 @@ input, select {
   margin-bottom: 0.25em;
 }
 
+h1 {
+  color: var(--text-primary-color);
+  text-transform: uppercase;
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
 p {
   margin: 0.25em 0;
 }
@@ -53,4 +60,23 @@ p {
 
 #response {
   margin-top: 1em;
+}
+
+.donation-panel {
+  margin-top: 1em;
+  background-color: #015f1f;
+  padding: 0.75em;
+  color: var(--text-primary-color);
+}
+
+.donation-wallet {
+  margin-top: 0.5em;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline dashed;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

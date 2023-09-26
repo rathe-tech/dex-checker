@@ -12,6 +12,12 @@ window.onload = async () => {
   const checkPositionButton = document.getElementById("check-position");
   const responseElem = document.getElementById("response");
 
+  const donationWallet = document.getElementById("donation-wallet");
+  donationWallet.addEventListener("click", async () => {
+    await navigator.clipboard.writeText("1DxMVkgaKW4sCNJcXGHGGEb2kv4Jh3Q4Wd9RjEvMP73");
+    alert("Wallet address copied!");
+  });
+
   const usdcMintAddress = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
   const usdcDecimals = 6;
 
