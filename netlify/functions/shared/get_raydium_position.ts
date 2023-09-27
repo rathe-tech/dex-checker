@@ -70,7 +70,9 @@ export async function getRaydiumPosition({
   const priceLower = SqrtPriceMath.sqrtPriceX64ToPrice(sqrtPriceX64Lower, pool.mintDecimalsA, pool.mintDecimalsB);
   const priceUpper = SqrtPriceMath.sqrtPriceX64ToPrice(sqrtPriceX64Upper, pool.mintDecimalsA, pool.mintDecimalsB);
 
-  const inRange = pool.tickCurrent <= position.tickUpper && pool.tickCurrent > position.tickLower;
+  const inRange = 
+    pool.tickCurrent < position.tickUpper && 
+    pool.tickCurrent >= position.tickLower;
 
   const tickArrayLowerAddress = TickUtils.getTickArrayAddressByTick(
     poolAccount.owner,
